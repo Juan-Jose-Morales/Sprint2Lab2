@@ -14,11 +14,20 @@ struct ContentView: View {
         VStack {
             Text("Selecciona una figura:")
                 .padding()
-            
+            ForEach(viewModel.figures) { figure in
+                Button(action: {
+                    viewModel.select(figure)
+                }) {
+                    Image(systemName: figure.imageName)
+                        .resizable()
+                        .frame(width: 50, height: 50)
+                        .padding()
+                }
+            }
         }
-        //.sheet(isPresented: $viewModel.showDetail) {
-           // DetailView(viewModel: viewModel.selectedFigureViewModel!)
-       // }
+        .sheet(isPresented: $viewModel.showDetail) {
+            DetailView(viewModel: viewModel.selectedFigureViewModel!)
+        }
     }
 }
 
