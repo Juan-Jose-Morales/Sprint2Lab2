@@ -13,6 +13,9 @@ struct ContentView: View {
     var body: some View {
         VStack {
             Text("Selecciona una figura:")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .multilineTextAlignment(.center)
                 .padding()
             ForEach(viewModel.figures) { figure in
                 Button(action: {
@@ -20,7 +23,7 @@ struct ContentView: View {
                 }) {
                     Image(systemName: figure.imageName)
                         .resizable()
-                        .frame(width: 50, height: 50)
+                        .frame(width: 150, height: 150)
                         .padding()
                 }
             }

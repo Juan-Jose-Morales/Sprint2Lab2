@@ -6,15 +6,16 @@
 //
 
 import Foundation
+
 class DetailViewModel: ObservableObject {
     @Published var input = ""
     @Published var result = ""
     let figure: Figure
-    let figureViewModel: FigureViewModel // Agregar referencia a FigureViewModel
+    let figureViewModel: FigureViewModel
 
-    init(figure: Figure, figureViewModel: FigureViewModel) { // Pasar FigureViewModel como parámetro
+    init(figure: Figure, figureViewModel: FigureViewModel) {
         self.figure = figure
-        self.figureViewModel = figureViewModel // Asignar FigureViewModel
+        self.figureViewModel = figureViewModel
     }
     
     var description: String {
@@ -27,19 +28,11 @@ class DetailViewModel: ObservableObject {
             return "Área del cuadrado: lado * lado"
         }
     }
-    func calculateArea() {
-        guard let inputValue = Double(input) else {
-            result = "Ingrese un número válido"
-            return
-        }
-
+    
+    func calculateArea(base: String? = nil, height: String? = nil) {
         switch figure {
         case .triangle:
-            // Suponiendo que "input" contiene la base y la altura separadas por una coma
-            let components = input.split(separator: ",")
-            guard components.count == 2,
-                  let base = Double(components[0]),
-                  let height = Double(components[1]) else {
+            guard let base = Double(base ?? ""), let height = Double(height ?? "") else {
                 result = "Ingrese valores válidos para base y altura"
                 return
             }
@@ -63,5 +56,4 @@ class DetailViewModel: ObservableObject {
             result = "Área del cuadrado: \(area)"
         }
     }
-
 }

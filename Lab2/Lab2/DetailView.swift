@@ -7,22 +7,39 @@
 
 import Foundation
 import SwiftUI
+
 struct DetailView: View {
     
     @ObservedObject var viewModel: DetailViewModel
+    @State private var baseInput = ""
+    @State private var heightInput = ""
 
     var body: some View {
         VStack {
-            Image(systemName: viewModel.figureViewModel.imageName) // Acceder a la imagen a través del ViewModel de la figura seleccionada
+            Image(systemName: viewModel.figureViewModel.imageName)
                 .resizable()
-                .frame(width: 100, height: 100)
+                .frame(width: 150, height: 150)
                 .padding()
             Text(viewModel.description)
                 .padding()
-            TextField("Ingrese los números", text: $viewModel.input)
-                .padding()
+            if viewModel.figure == .triangle {
+                TextField("Base", text: $baseInput)
+                    .textFieldStyle(.roundedBorder)
+                    .padding()
+                TextField("Altura", text: $heightInput)
+                    .textFieldStyle(.roundedBorder)
+                    .padding()
+            } else {
+                TextField("Ingrese el número", text: $viewModel.input)
+                    .textFieldStyle(.roundedBorder)
+                    .padding()
+            }
             Button(action: {
-                viewModel.calculateArea()
+                if viewModel.figure == .triangle {
+                    viewModel.calculateArea(base: baseInput, height: heightInput)
+                } else {
+                    viewModel.calculateArea()
+                }
             }) {
                 Text("Calcular")
             }
@@ -31,9 +48,6 @@ struct DetailView: View {
         }
     }
 }
-
-
-
 
 struct DetailView_Previews: PreviewProvider {
     static var previews: some View {
